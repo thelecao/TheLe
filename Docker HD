@@ -1,0 +1,191 @@
+Docker
+https://www.youtube.com/watch?v=r6JiWwh-08c&list=PLwJr0JSP7i8At14UIC-JR4r73G4hQ1CXO
+https://www.youtube.com/watch?v=JbimtwkN40s&list=PLjCpH2Qpki-sTjdlYXE8AifSKQFa8ZL23&index=25
+Cài docker trên Centos
+https://blog.zabbix.com/zabbix-docker-containers/7150/
+yum install update
+##DOCKER##
+sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum install −y docker-ce
+sudo systemctl start docker
+
+##DOCKER COMPOSE##
+sudo curl -L "<https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)>" -o /usr/local/bin/docker-compose
+
+yum install git
+
+git clone https://github.com/zabbix/zabbix-docker.git
+
+##git reset --hard
+
+Cài docker và docker-compose trên EC2/AWS và Windows
+sudo yum update -y
+sudo yum install -y docker
+sudo service docker start
+sudo usermod -a -G docker ec2-user
+
+Ubuntu: sudo snap install docker.
+sudo apt install docker
+sudo service docker start
+
+# Cài docker-compose
+Tải bản docker-compose đã được release, trong hướng dẫn này là bản docker-compose 1.24.1.
+sudo curl -L "<https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)>" -o /usr/local/bin/docker-compose
+Phân quyền thực thi cho docker-compose 
+sudo chmod +x /usr/local/bin/docker-compose
+Tạo liên kết cho docker-compose để có thể thực hiện lệnh docker-compose
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+Sau khi cài đặt xong, kiểm tra lại phiên bản của docker-compose vừa thực hiện.
+docker-compose -v
+Docker 2/DevOps triển khai tạo Image, Container&Docker Hub cho khách hàng và đội lập trình
+Các lệnh với image
+# Tìm image để cài đặt
+docker search centos
+#- List các image đang có
+docker imadocge ls
+# Xóa image
+sudo docker rmi [Image ID]
+Chú ý: Các image mà có container đang chạy thì sẽ không xóa được mà phải xóa container liên quan tới nó trước
+Lưu ý bản chính thức chỗ office có chữ ok
+#- Pull image centos về
+down bản centos version 7 về
+docker pull centos:7
+
+# Làm việc với container
+
+# Chạy một container từ image 
+#-d detach chạy nền backgroud
+docker run -d
+#-p mở port
+ docker run --privileged -d -p 80:80 [Image Name] /sbin/init
+docker run --privileged -d -p 80:80 centos:7 /sbin/init
+
+# Vào một container để chạy lệnh 
+docker exec -it [Container ID] /bin/bash 
+Id centos là -it 8109d85457b9
+docker exec -it 8109d85457b9 /bin/bash 
+
+#- Cài đặt apache
+yum -y install httpd
+systemctl start httpd
+systemctl enable httpd
+
+
+
+#- Thoát ra khỏi container
+exit
+
+#- Tạo image để triển khai cho máy khác
+Sau đó bạn sử dụng lệnh docker push <your_hub_username>/<your_repository> để đưa image lên trên Docker Hub.
+docker commit -m "Comment" -a "Tác giả"  [Container ID] [Image Name]
+image name thelecao/projec01 tên dockerhub/project
+docker commit -m "Centos Project01" -a "le cao the" 8109d85457b9 thelecao/project01:v1
+
+#- Đăng nhập vào docker/hub
+docker login
+
+#- Đưa image lên docker hup để mọi người cùng sử dụng
+docker push [Tên image]
+docker push tinhocthatladongian/project01:v1
+ 
+#- Check các container đang chạy
+sudo docker ps -a
+
+#- Xem trạng thái container
+docker container ls -a
+
+# Xóa containner
+sudo docker rm [Container ID]
+
+# Stop container
+docker container stop [Container ID]
+
+#- Restart container
+docker container restart [Container ID]
+
+#- Pause container
+docker container pause  [Container ID]
+#- Truy cập vào các container đang chạy
+docker container attach [Container ID]
+#- Lệnh stop toàn bộ container
+docker stop $(docker ps -a -q)
+#- Lệnh xóa toàn bộ container
+sudo docker rm -f $(docker ps -a -q)
+
+# Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/containers/json?all=1": dial unix /var/run/docker.sock: connect: permission denied
+sudo chmod 666 /var/run/docker.sock
+
+
+#- Lệnh xóa toàn bộ image
+sudo docker rmi -f $(docker images -a -q)
+xoá image 
+docker rmi
+code index
+<html>
+  <head>
+    <title>Welcome to your website!</title>
+  </head>
+  <body>
+    <h1>Success! Trang web rửa xe!</h1>
+  </body>
+</html>
+ Tạo Folder chứa code cho 2 website web1 và web2 (với tuỳ chọn
+-p
+ cho phép ta tạo ra những thư mục con lồng trong nó)
+
+sudo mkdir -p /var/www/web1
+# Câu lệnh thường dùng khi thao tác với Docker Image
+docker images: Liệt kê các image
+docker image build: Build image từ file Dockerfile.
+docker image history: Hiện thị lịch sử của image.
+docker image import: Import nội dung từ tarball để tạo ra filesystem của image.
+docker image inspect: Hiển thị thông tin chi tiết của một hoặc nhiều image.
+docker image load: Nạp image từ file *.tar hoặc STDIN.
+docker image prune: Xóa các image không sử dụng.
+docker image pull: Pull một image hoặc repository từ Docker HUB đăng ký.
+docker image push: Đẩy image, repository lên Docker HUB.
+docker image save: Lưu một hoặc nhiều image vào file *.tar.
+docker image tag: Gắn tag cho TARGET_IMAGE tương ứng với SOURCE_IMAGE.
+# Câu lệnh thường dùng khi thao tác với Docker Container.
+docker container commit: Tạo image mới từ những thay đổi của container.
+docker container create: Tạo container mới.
+docker container exec: Chạy các command khi container đang hoạt động.
+docker container kill: Chấm dứt hoạt động của một hoặc nhiều container.
+docker container pause: Tạm dừng tất cả tiến trình bên trong một hoặc nhiều container.
+docker container run: Chạy các command trong một container mới.
+docker container start: Chạy một container hoặc nhiều container đã dừng.
+docker container rename: Đổi tên container.
+docker containedr restart: Khởi động lại một hoặc nhiều container.
+
+#The following example starts a Redis container and configures it to always restart unless it is explicitly stopped or Docker is restarted.
+
+ docker run -d --restart unless-stopped redis
+
+# This command changes the restart policy for an already running container named redis.
+
+ docker update --restart unless-stopped redis
+
+# And this command will ensure all currently running containers will be restarted unless stopped. cho all docker container
+
+ docker update --restart unless-stopped $(docker ps -q)
+
+# Checking the containers and discovering IP Addresses: (kiểm tra cointainer thuộc IP nào)
+# cài nettools
+sudo apt install net-tools
+# ifconfig [note eth0 address and browse it]
+docker inspect container-name | grep "IPAddress\":"
+
+
+ # Network
+ # Để liệt kê các network đang có:
+ docker network ls
+# Các network được tạo ra theo một driver nào đó như bridge, none, overlay, macvlan. Trong phần này sẽ sử dụng đến bridge network: nó cho phép các container cùng network này liên lạc với nhau, cho phép gửi gói tin ra ngoài. Tạo một bridge network với tên network là name-network.
+
+docker network create --driver bridge name-network
+# Khi tạo một container, ấn định nó nối vào network có tên là name-network thì thêm vào tham số --network name-netowrk trong lệnh docker run. Khi một container có tên name-container đã được tạo, để thiết lập nó nối vào network có tên name-network.
+
+docker network connect name-network name-container
+
+
+
