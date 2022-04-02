@@ -135,6 +135,36 @@ code index
  cho phép ta tạo ra những thư mục con lồng trong nó)
 
 sudo mkdir -p /var/www/web1
+
+1. Docker volume
+Là một nơi lưu trữ data nằm ngoài container, mục đích không làm mất data khi xóa container
+
+Sử dụng Volume khi nào 
+- Khi chia sẻ dữ liệu giữa nhiều container đang chạy.
+- Lưu dữ liệu tới một server remote hoặc cloud.
+- Khi cần backup, restore hoặc migrate dữ liệu từ Docker Host này sang Docker Host khác.
+
+Lệnh liên quan tới volume
+# docker volume create        Tạo mạng mới
+# docker volume inspect       Xem chi tiết mạng
+# docker volume ls             Hiển thị những mạng đang có
+# docker volume rm             Xóa volume
+# docker volume prune         Xóa toàn bộ volume
+
+2. Docker networks
+Để kết nối các container trong cùng mạng hoặc khác mạng với nhau.
+
+Các câu lệnh thao tác với mạng
+# docker network create        Tạo mạng mới
+# docker network inspect       Xem chi tiết mạng
+# docker network ls             Hiển thị những mạng đang có
+# docker network rm            Xóa mạng
+# docker network prune         Xóa đồng loạt các mạng không sử dụng
+# docker network connect       Tạo kết nối mạng
+# docker network disconnect    Ngắt kết nối mạng
+
+
+
 # Câu lệnh thường dùng khi thao tác với Docker Image
 docker images: Liệt kê các image
 docker image build: Build image từ file Dockerfile.
